@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            padding: 0;
+            text-align: center;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: none;
+            color: white;
+        }
+        .update-btn {
+            background-color: #28a745;
+        }
+        .update-btn:hover {
+            background-color: #218838;
+        }
+        
+        /* Logout button styles */
+        .btn-logout {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Invoices Extracted</th>
+                <th>API Key</th>
+                <th>Account Limit</th>
+                <th>Update Limit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in user_activity %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.invoices_extracted }}</td>
+                <td>{% if user.api_keys %}{{ user.api_keys[0].api_key }}{% else %}N/A{% endif %}</td>
+                <td>
+                    <input type="number" id="limit-{{ user.user_id }}" value="{{ user.account_limit }}" min="1" />
+                </td>
+                <td>
+                    <button class="update-btn" onclick="updateUserLimit('{{ user.user_id }}')">Update</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+    function updateUserLimit(userId) {
+        let newLimit = document.getElementById(`limit-${userId}`).value;
+        if (newLimit < 1) {
+            alert("Account limit must be a positive integer.");
+            return;
+        }
+        fetch('/admin/update-user-limit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId, new_account_limit: newLimit })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert("Success: " + data.message);
+                location.reload();
+            } else {
+                alert("Error: " + data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    </script>
+
+    <div>
+        <a class="btn-logout" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</body>
+</html>

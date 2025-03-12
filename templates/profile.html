@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center">Profile Details</h2>
+
+                <!-- Profile Picture -->
+                <div class="mb-4 text-center">
+                    {% if profile_picture %}
+                        <img src="{{ url_for('static', filename='profile_pics/' + profile_picture.split('/')[-1]) }}" alt="Profile Picture" class="rounded-circle" width="150" height="150">
+                    {% else %}
+                      
+                </div>
+
+                <!-- User Details -->
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>Username</th>
+                            <td>{{ username }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email Address</th>
+                            <td>{{ email }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

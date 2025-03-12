@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice History</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            /* background-image: linear-gradient(to top, #ebbba7 0%, #cfc7f8 100%); */
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .history-table th,
+        .history-table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .history-table td.timestamp {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .history-table tr:hover {
+            background-color: #e9f7fa;
+        }
+
+        .btn-back {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            border-radius: 50px;
+        }
+
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Full Invoice Extraction History</h1>
+        <h4 class="text-center">Welcome {{ username }}!</h4>
+
+        <table class="table table-bordered history-table">
+            <thead>
+                <tr>
+                    <th scope="col">Timestamp</th>
+                    <th scope="col">Image Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if invoice_history %}
+                    {% for entry in invoice_history %}
+                        <tr>
+                            <td class="timestamp">{{ entry.timestamp_str }}</td>
+                            <td>{{ entry.image_name }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="2">No history found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-back">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
