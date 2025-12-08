@@ -1,181 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Body Styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            /* background-image: linear-gradient(to top, #ebbba7 0%, #cfc7f8 100%); */
-            color: #333;
-            padding: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* Container */
-        .container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            text-align: center;
-        }
-
-        /* Heading */
-        h2 {
-            margin-bottom: 20px;
-            font-size: 28px;
-            color: #333;
-        }
-
-        /* Form */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        label {
-            font-size: 16px;
-            color: #555;
-            text-align: left;
-        }
-
-        input[type="text"], input[type="email"], input[type="password"] {
-            padding: 10px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
-            outline: none;
-            border-color: #4caf50;
-            background-color: #f1f8e9;
-        }
-
-        button {
-            padding: 12px 20px;
-            font-size: 18px;
-            border: none;
-            background-color: #4caf50;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        /* Flash Message Styling */
-        ul {
-            background-color: #f44336;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            list-style-type: none;
-            margin-top: 20px;
-        }
-
-        ul li {
-            font-size: 16px;
-        }
-
-        /* Link Styling */
-        p {
-            font-size: 14px;
-            margin-top: 20px;
-        }
-
-        a {
-            color: #4caf50;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-        /* Flash message styles */
-.flash-messages {
-    list-style-type: none;
-    padding: 0;
-}
-
-.flash-message {
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.flash-message.success {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.flash-message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
-.flash-message.warning {
-    background-color: #fff3cd;
-    color: #856404;
-}
-
-.flash-message.info {
-    background-color: #cce5ff;
-    color: #004085;
-}
-
-
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up – AI Infinite</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <style>
+    :root {
+      --white: #ffffff;
+      --text-dark: #1a1a1a;
+      --primary: #003087;
+      --primary-hover: #002366;
+      --secondary: #666666;
+      --bg-light: #f0f2f5;
+      --error: #d32f2f;
+      --success: #155724;
+      --input-border: #ddd;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0; padding: 0;
+      color: var(--text-dark);
+      background: var(--bg-light);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .auth-form {
+      background: var(--white);
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 480px;
+      animation: slideIn 0.5s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .form-title {
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 0.25rem;
+    }
+    .form-sub {
+      color: var(--secondary);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--input-border);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 6px rgba(0, 48, 135, 0.2);
+      outline: none;
+    }
+    .form-group input:invalid {
+      border-color: var(--error);
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--primary);
+      color: var(--white);
+      font-size: 1.05rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    .switch-auth {
+      text-align: center;
+      margin-top: 1.75rem;
+    }
+    .btn-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .btn-link:hover {
+      text-decoration: underline;
+    }
+    .security-note {
+      color: var(--secondary);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .security-note i {
+      margin-right: 0.4rem;
+    }
+    .flash-messages {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    .flash-message {
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.75rem;
+      border-radius: 8px;
+      font-weight: 500;
+      text-align: center;
+    }
+    .flash-message.success {
+      background: #d4edda;
+      color: var(--success);
+    }
+    .flash-message.error {
+      background: #f8d7da;
+      color: var(--error);
+    }
+    @media (max-width: 500px) {
+      .auth-form { padding: 2rem; }
+      .form-title { font-size: 1.7rem; }
+    }
+  </style>
 </head>
 <body>
+  <div class="auth-form">
+    <h1 class="form-title">Sign Up for AI Infinite</h1>
+    <p class="form-sub">Create your account to get started</p>
 
-    <div class="container">
-        <h2>Sign Up</h2>
-        <form action="{{ url_for('signup') }}" method="POST">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required><br>
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+      {% if msgs %}
+        <ul class="flash-messages">
+          {% for cat, msg in msgs %}
+            <li class="flash-message {{ cat }}">{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required><br>
+    <form action="{{ url_for('signup') }}" method="POST" novalidate>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          minlength="3"
+          placeholder="Choose a username"
+        />
+      </div>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required><br>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="you@example.com"
+        />
+      </div>
 
-            <button type="submit">Sign Up</button>
-        </form>
+      <div class="form-group">
+        <label for="phone">Phone number</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          required
+          pattern="^\+\d{1,3}\s?\d{4,14}$"
+          placeholder="+91 98765 43210"
+        />
+      </div>
 
-        <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          minlength="6"
+          placeholder="Create a secure password"
+        />
+      </div>
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
-    </div>
+      <button type="submit" class="btn-primary">Sign Up</button>
 
+      <div class="switch-auth">
+        <p>
+          Already have an account?
+          <a href="{{ url_for('login') }}" class="btn-link">Log In</a>
+        </p>
+        <p class="security-note">
+          <i class="fas fa-lock"></i> Secured with SSL Encryption
+        </p>
+      </div>
+    </form>
+  </div>
 </body>
 </html>

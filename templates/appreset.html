@@ -3,172 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password</title>
+    <title>Reset Password - AI Infinite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --white: #ffffff;
+            --text-dark: #1a1a1a;
+            --primary-color: #003087;
+            --secondary-color: #666666;
+            --background-light: #f0f2f5;
+            --error-color: #d32f2f;
+            --success-color: #155724;
         }
 
-        /* Body Styling */
         body {
-            font-family: 'Arial', sans-serif;
-            /* background-image: linear-gradient(to top, #ebbba7 0%, #cfc7f8 100%); */
-            color: #333;
-            padding: 50px;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            background: var(--background-light);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
 
-        /* Container */
-        .container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 400px;
+        .auth-form {
+            background: var(--white);
+            padding: 4rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .form-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
             text-align: center;
         }
 
-        /* Heading */
-        h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
+        .form-subtitle {
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
-        /* Form */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .auth-form-group {
+            margin-bottom: 1.5rem;
         }
 
-        label {
-            font-size: 16px;
-            color: #555;
-            text-align: left;
+        .auth-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary-color);
         }
 
-        input[type="password"] {
-            padding: 10px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+        .auth-form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--background-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        input[type="password"]:focus {
+        .auth-form-group input:focus {
+            border-color: var(--primary-color);
             outline: none;
-            border-color: #4caf50;
-            background-color: #f1f8e9;
+            box-shadow: 0 0 8px rgba(0, 48, 135, 0.2);
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 18px;
+        .btn-primary {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: var(--white);
             border: none;
-            background-color: #4caf50;
-            color: white;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background 0.3s ease;
         }
 
-        button:hover {
-            background-color: #45a049;
+        .btn-primary:hover {
+            background: #002366;
         }
 
-        /* Flash Message Styling */
-        ul {
-            background-color: #f44336;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            list-style-type: none;
-            margin-top: 20px;
+        .switch-auth {
+            text-align: center;
+            margin-top: 2rem;
         }
 
-        ul li {
-            font-size: 16px;
-        }
-
-        /* Link Styling */
-        p {
-            font-size: 14px;
-            margin-top: 20px;
-        }
-
-        a {
-            color: #4caf50;
+        .btn-link {
+            color: var(--primary-color);
             text-decoration: none;
+            font-weight: 600;
         }
 
-        a:hover {
+        .btn-link:hover {
             text-decoration: underline;
         }
-        /* Flash message styles */
-.flash-messages {
-    list-style-type: none;
-    padding: 0;
-}
 
-.flash-message {
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    font-weight: bold;
-}
+        .security-note {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
 
-.flash-message.success {
-    background-color: #d4edda;
-    color: #155724;
-}
+        .flash-messages {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
 
-.flash-message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-}
+        .flash-message {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+        }
 
-.flash-message.warning {
-    background-color: #fff3cd;
-    color: #856404;
-}
+        .flash-message.success {
+            background-color: #d4edda;
+            color: var(--success-color);
+        }
 
-.flash-message.info {
-    background-color: #cce5ff;
-    color: #004085;
-}
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: var(--error-color);
+        }
 
-
+        @media (max-width: 768px) {
+            .auth-form {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .form-title {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="auth-form">
+        <h1 class="form-title">Reset Password</h1>
+        <p class="form-subtitle">Enter your new password</p>
 
-    <div class="container">
-        <h2>Reset Password</h2>
-        <form action="{{ url_for('reset_password') }}" method="POST">
-            <label for="password">Enter New Password</label>
-            <input type="password" id="password" name="password" required><br>
-
-            <button type="submit">Reset Password</button>
-        </form>
-
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="flash-message {{ category }}">{{ message }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}
         {% endwith %}
 
-    </div>
+        <form action="{{ url_for('reset_password') }}" method="POST">
+            <div class="auth-form-group">
+                <label for="password">New Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
 
+            <div class="auth-form-group">
+                <label for="confirm_password">Confirm New Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Reset Password</button>
+
+            <div class="switch-auth">
+                <p>Back to <a href="{{ url_for('login') }}" class="btn-link">Login</a></p>
+                <p class="security-note"><i class="fas fa-lock"></i> Secured with SSL Encryption</p>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

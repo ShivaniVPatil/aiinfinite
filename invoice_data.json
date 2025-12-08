@@ -1,0 +1,53 @@
+{
+    "page_1": {
+        "invoice_number": "24-25/5500",
+        "invoice_date": "22-07-2024",
+        "customer_name": "DEENANATH MEDICAL STORES",
+        "customer_address": "DEENANATH HOSPITAL NEAR MHATRE BRIDGE ERANDWANE",
+        "customer_state": "MAHARASHTRA",
+        "customer_gstin": "27AAQAT1764N1ZA",
+        "seller_name": "KALPAK MARKETING PVT LTD",
+        "seller_address": "OFFICE NO.102, VINAYAK KRISHNA APTS, 1423 SHUKRAWAR PETH, OFF BAJIRAO ROAD, PUNE-2 STATE: MAHARASHTRA PH-24494767, 8975757236",
+        "seller_gstin": "27AAQCK2267K1ZD",
+        "purchase_order_number": "DMN/PO/PHRMCY/2024-25/9718",
+        "items": [
+            {
+                "description": "POLYFLUSH 10ML SYRINGE",
+                "quantity": 280,
+                "unit_price": 20.0,
+                "total_price": 5600.0,
+                "hsn_sac": "W8510C",
+                "cgst_rate": 6.0,
+                "cgst_amount": 336.0,
+                "sgst_rate": 6.0,
+                "sgst_amount": 336.0,
+                "total_tax": 672.0,
+                "item_code": "SR-03-0131"
+            },
+            {
+                "description": "POLYFLUSH 10ML SYRINGE",
+                "quantity": 680,
+                "unit_price": 20.0,
+                "total_price": 13600.0,
+                "hsn_sac": "W8510C",
+                "cgst_rate": 6.0,
+                "cgst_amount": 816.0,
+                "sgst_rate": 6.0,
+                "sgst_amount": 816.0,
+                "total_tax": 1632.0,
+                "item_code": "SR-03-0131"
+            }
+        ],
+        "item_subtotal": 19200.0,
+        "tax_amount": 2304.0,
+        "discount_amount": 0.0,
+        "total_amount": 21504.0,
+        "bank_details": {
+            "bank_name": "SARASWAT CO-OP BANK",
+            "account_number": "2835001000000124",
+            "swift_code": "SRCB0000283"
+        },
+        "currency": "INR",
+        "additional_information": "WE DECLARE THAT/THIS INVOICE SHOWS THE ACTUAL PRICE OF THE GOODS DESCRIBE & THAT ALL PARTICULARS ARE TRUE & CORRECT. ACCIDENTAL OVER/UNDER CHARGE IF ANY WILL BE REFUND/RECEIVED SUBJECT TO PUNE JURISDICTION ONLY. (E & O.E.)"
+    }
+}

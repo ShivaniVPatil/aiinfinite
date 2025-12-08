@@ -1,41 +1,66 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>User Dashboard - AI Infinite</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Global Styles (unchanged) */
+        :root {
+            --primary-color: #007bff;
+            --background-light: #f8f9fa;
+            --text-dark: #333;
+            --white: #fff;
+        }
+
         body {
-            background-color: #f8f9fa;
             font-family: Arial, sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: var(--background-light);
         }
 
         .navbar {
-            background-color: #010101d4;
-            padding: 0.4rem;
-            min-height: 45px;
+            background-color: #f7f7f7;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .navbar-brand {
-            color: white !important;
-            font-weight: 500;
-            font-size: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
         }
-       
+
         .navbar-toggler {
             padding: 0.25rem 0.5rem;
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 123, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
         .main-container {
             display: flex;
-            min-height: calc(100vh - 45px);
+            min-height: calc(100vh - 60px);
         }
 
         .sidebar {
-            width: 220px;
-            background-color: white;
+            width: 250px;
+            background-color: var(--white);
             border-right: 1px solid #dee2e6;
-            padding: 1rem;
+            padding: 1.5rem;
             position: fixed;
             height: 100%;
             z-index: 1000;
@@ -47,63 +72,54 @@
             transform: translateX(0);
         }
 
-        .nav-link {
-            color: #333 !important;
-            padding: 0.5rem 1rem;
-            margin: 0.2rem 0;
-        }
-
-        .nav-link:hover {
-            background-color: #f8f9fa;
-        }
-
-        .nav-link.active {
-            background-color: #e9ecef;
-            font-weight: 500;
-        }
-
-        .generate-api-key-btn,
-        .btn-logout,
-        .view-api-key-btn,
-        .view-history-btn {
-            display: block;
-            padding: 0.5rem 1rem;
-            margin: 0.5rem 0;
-            background-color: #f8f9fa;
-            color: #333;
+        .sidebar .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+            padding: 0.75rem 1rem;
+            margin: 0.3rem 0;
+            border-radius: 5px;
             text-decoration: none;
-            border-radius: 4px;
-            text-align: center;
+            transition: background-color 0.3s;
         }
 
-        .generate-api-key-btn:hover,
-        .btn-logout:hover,
-        .view-api-key-btn:hover,
-        .view-history-btn:hover {
+        .sidebar .nav-link:hover {
+            background-color: var(--background-light);
+        }
+
+        .sidebar .nav-link.active {
             background-color: #e9ecef;
+            font-weight: bold;
         }
 
         .container {
-            max-width: 600px;
-            margin: 1rem auto;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex-grow: 1;
         }
 
-        .upload-box {
-            background-color: #ffffff;
-            padding: 1rem;
+        .card {
+            background-color: var(--white);
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
             margin-top: 1.5rem;
-            max-width: 500px;
-            margin: 0 auto;
         }
 
-        .upload-box input[type="file"] {
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-control {
             border-radius: 5px;
             border: 1px solid #ccc;
             padding: 0.75rem;
@@ -111,34 +127,19 @@
             margin-bottom: 1rem;
         }
 
-        .upload-box button {
-            display: block;
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #0d6efd;
-            color: white;
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            width: 100%;
         }
 
-        .upload-box button:hover {
-            background-color: #0b5ed7;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 220px;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .upload-box {
-                max-width: 90%;
-            }
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
 
         .loading-container {
@@ -146,7 +147,6 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            font-size: 30px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -154,32 +154,20 @@
         }
 
         .dot {
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
-            background-color: #ff6347;
+            background-color: var(--primary-color);
             animation: bounce 1.5s infinite ease-in-out;
         }
 
-        .dot:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .dot:nth-child(1) { animation-delay: 0s; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .modal-body {
@@ -188,79 +176,109 @@
             overflow-y: auto;
         }
 
-        #api-key-text {
-            word-wrap: break-word;
-            word-break: break-word;
-            overflow-wrap: break-word;
+        .modal-body p {
+            margin-bottom: 1rem;
         }
 
+        .btn-secondary {
+            background-color: #6c757d;
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+            }
+            .container {
+                max-width: 90%;
+                margin: 1rem auto;
+            }
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 1rem;
+            }
+            .card-title {
+                font-size: 1.25rem;
+            }
+            .btn-primary {
+                padding: 0.5rem 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-dark">
+    <nav class="navbar">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" id="sidebarToggle">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <span class="navbar-brand">Dashboard</span>
+            <button class="navbar-toggler" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>
+            <a href="{{ url_for('index') }}" class="navbar-brand">
+                <img src="{{ url_for('static', filename='logos/aiinfinite.png') }}" alt="AI Infinite Logo" style="height: 40px;">
+            </a>
         </div>
     </nav>
 
     <div class="main-container">
         <div class="sidebar">
-            <div class="d-flex flex-column h-100">
-                <div class="flex-grow-1">
-                    <div class="nav flex-column">
-                        <a class="nav-link active" href="{{ url_for('dashboard') }}">
-                            Dashboard Overview
-                        </a>
-                        <a href="{{ url_for('view_history') }}" class="view-history-btn" id="view-history-btn">
-                            View Invoice History
-                        </a>
-                        <a href="javascript:void(0);" class="generate-api-key-btn" id="generate-api-key-btn">
-                            Generate API Key
-                        </a>
-                        <a href="javascript:void(0);" class="view-api-key-btn" id="view-api-key-btn">
-                            View API Key
-                        </a>
-                        <a class="nav-link btn-logout" href="{{ url_for('logout') }}">
-                            Logout
-                        </a>
-                    </div>
-                </div>
+            <div class="nav flex-column">
+                <a class="nav-link" href="{{ url_for('home_logged_in') }}"><i class="fas fa-home"></i> Home
+                  </a>
+                  
+                <a class="nav-link active" href="{{ url_for('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard Overview</a>
+                <a href="{{ url_for('view_history') }}" class="nav-link"><i class="fas fa-history"></i> View Document History</a>
+                <a href="javascript:void(0);" class="nav-link" id="generate-api-key-btn"><i class="fas fa-key"></i> Generate API Key</a>
+                <a href="javascript:void(0);" class="nav-link" id="view-api-key-btn"><i class="fas fa-eye"></i> View API Key</a>
+                <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </div>
 
         <div class="container">
-            
-
             <!-- Flash Messages -->
-            <div class="mt-4">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                  {% if messages %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
                     {% for category, message in messages %}
-                      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                          <strong>{{ message }}</strong>
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                      </div>
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     {% endfor %}
-                  {% endif %}
-                {% endwith %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Upload Document Card -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Upload Document</h5>
+                    <form id="upload-form" action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="doc_type" class="form-label">Select Document Type</label>
+                            <select class="form-control" id="doc_type" name="doc_type" required>
+                                <option value="invoice">Invoice</option>
+                                <option value="passport">Passport</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Choose Document File (PDF or Image)</label>
+                            <input type="file" class="form-control" id="file" name="file" accept="image/*,application/pdf" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload and Extract</button>
+                    </form>
+                </div>
             </div>
 
-            <h4 class="mt-4">Upload Invoice</h4>
-            <div class="upload-box">
-                <form id="upload-form" action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <input type="file" class="form-control" name="file" accept="image/*,application/pdf" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                </form>
-
-                <img id="loading-image" src="loading.gif" alt="Uploading..." style="display: none; width: 50px; height: 50px; margin-top: 10px;" />
-            </div>
-
-            <div class="loading-container" id="loading-container" style="display: none;">
+            <div class="loading-container" id="loading-container">
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
@@ -277,7 +295,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p id="api-key-text"></p>
+                    <p>Your API Key: <span id="api-key-value"></span></p>
+                    <button class="btn btn-secondary" onclick="copyToClipboard()">Copy</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -288,32 +307,31 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Sidebar Toggle
         document.getElementById('sidebarToggle').addEventListener('click', function() {
             document.querySelector('.sidebar').classList.toggle('active');
         });
 
+        // Generate API Key
         document.getElementById('generate-api-key-btn').addEventListener('click', function() {
             fetch("{{ url_for('generate_api_key') }}", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 credentials: "same-origin"
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('API Key generated: ' + data.api_key);
+                    document.getElementById('api-key-value').innerText = data.api_key;
+                    new bootstrap.Modal(document.getElementById('apiKeyModal')).show();
                 } else {
                     alert('Error: ' + data.error);
                 }
             })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("An error occurred while generating the API key.");
-            });
+            .catch(error => alert("An error occurred while generating the API key."));
         });
 
+        // View API Key
         document.getElementById('view-api-key-btn').addEventListener('click', function() {
             fetch("{{ url_for('get_api_key') }}", {
                 method: "GET",
@@ -322,27 +340,29 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    document.getElementById('api-key-text').innerText = 'Your API Key: ' + data.api_key;
+                    document.getElementById('api-key-value').innerText = data.api_key;
                     new bootstrap.Modal(document.getElementById('apiKeyModal')).show();
                 } else {
                     alert('Error: ' + data.error);
                 }
             })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("An error occurred while fetching the API key.");
-            });
+            .catch(error => alert("An error occurred while fetching the API key."));
         });
 
-        document.getElementById('upload-form').addEventListener('submit', function(event) {
+        // Copy to Clipboard
+        function copyToClipboard() {
+            const apiKey = document.getElementById('api-key-value').innerText;
+            navigator.clipboard.writeText(apiKey).then(() => {
+                alert('API Key copied to clipboard');
+            }, () => {
+                alert('Failed to copy API Key');
+            });
+        }
+
+        // Loading Animation
+        document.getElementById('upload-form').addEventListener('submit', function() {
             document.getElementById('loading-container').style.display = 'flex';
         });
-
-        window.onload = function() {
-            if (window.location.pathname === '/dashboard') {
-                document.getElementById('loading-container').style.display = 'none';
-            }
-        };
     </script>
 </body>
 </html>

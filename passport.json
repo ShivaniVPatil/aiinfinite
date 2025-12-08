@@ -1,0 +1,19 @@
+{
+    "page_1": {
+        "passport_number": "Z0000000",
+        "passport_type": "P",
+        "issue_date": "01/01/2013",
+        "expiration_date": "01/01/2023",
+        "first_name": "KUMAR",
+        "last_name": "SPECIMEN",
+        "middle_name": "G",
+        "date_of_birth": "24/05/1985",
+        "place_of_birth": "MUMBAI, MAHARASHTRA",
+        "gender": "M",
+        "nationality": "INDIAN",
+        "passport_issuing_country": "REPUBLIC OF INDIA",
+        "passport_issuing_authority": "BANGALORE",
+        "passport_issuing_country_code": "IND",
+        "passport_barcode_data": "P<<SPECIMEN<<KUMAR<G<<<<<<<<<<<<<<<<\nZ9999999<DIND8505246M2300000<<<<<<<<<<<<<<4"
+    }
+}

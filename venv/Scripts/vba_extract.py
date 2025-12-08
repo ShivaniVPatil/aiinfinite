@@ -1,4 +1,4 @@
-#!C:\Users\SUDARSHAN CHAUGULE\Downloads\New folder\venv\Scripts\python.exe
+#!E:\aiinfinite\New folder\venv\Scripts\python.exe
 
 ##############################################################################
 #

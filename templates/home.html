@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="AI Infinite: Automate data extraction from PDFs, invoices, passports, and more with our AI-powered parser. Save time, boost productivity, and integrate seamlessly with your tools." />
+  <meta name="keywords" content="AI document parser, data extraction, PDF parser, invoice extraction, passport extraction, OCR, AI Infinite, automation" />
+  <title>AI Infinite - Revolutionize Your Workflow with AI-Powered Data Extraction</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- AOS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <link rel="icon" href="{{ url_for('static', filename='logos/ai infinite.jpg') }}" type="image/x-icon">
+
+</head>
+<body class="antialiased text-gray-800">
+  !DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="AI Infinite: Automate data extraction from PDFs, invoices, passports, and more with our AI-powered parser. Save time, boost productivity, and integrate seamlessly with your tools." />
+    <meta name="keywords" content="AI document parser, data extraction, PDF parser, invoice extraction, passport extraction, OCR, AI Infinite, automation" />
+    <title>AI Infinite - Revolutionize Your Workflow with AI-Powered Data Extraction</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  
+    <link rel="icon" href="{{ url_for('static', filename='logos/ai infinite.jpg') }}" type="image/x-icon">
+  
+  </head>
+  <body class="antialiased text-gray-800">
+  
+  <!-- Updated Navbar -->
+  <nav id="navbar" class="fixed top-0 left-0 w-full bg-[#f7f7f7] backdrop-blur shadow-md z-50">
+    <div class="container mx-auto px-6 py-4 flex items-center">
+      <!-- Logo / Brand -->
+      <a href="{{ url_for('home_logged_in') if logged_in else url_for('index') }}"
+      class="flex items-center space-x-2 hover:opacity-90">
+     <img src="{{ url_for('static', filename='logos/aiinfinite.png') }}"
+          alt="AI Infinite Logo"
+          class="h-12 md:h-16 w-auto" />
+   </a>
+
+      <!-- Combined Right-side Links -->
+      <div class="hidden md:flex items-center ml-auto space-x-12">
+        <a href="{{ url_for('invoice', doc_type='invoice') }}" class="text-gray-700 hover:text-blue-600 font-medium">Invoice</a>
+        <a href="{{ url_for('passport', doc_type='passport') }}" class="text-gray-700 hover:text-blue-600 font-medium">Passport</a>
+        <a href="{{ url_for('pricing') }}" class="text-gray-700 hover:text-blue-600 font-medium">Pricing</a>
+        <a href="{{ url_for('about') }}" class="text-gray-700 hover:text-blue-600 font-medium">About</a>
+        {% if logged_in %}
+          <a href="{{ url_for('dashboard') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+          <a href="{{ url_for('logout') }}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold">Logout</a>
+        {% else %}
+          <a href="{{ url_for('login') }}" class="text-gray-700 hover:text-blue-600 font-medium">Log in</a>
+          <a href="{{ url_for('login') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold">Get Started</a>
+        {% endif %}
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
+        <i class="fas fa-bars fa-2x"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu Content -->
+    <div id="menu" class="hidden md:hidden bg-[#f7f7f7] backdrop-blur shadow-inner">
+      <div class="flex flex-col space-y-2 px-6 py-4">
+        <a href="{{ url_for('invoice', doc_type='invoice') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Invoice</a>
+        <a href="{{ url_for('passport', doc_type='passport') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Passport</a>
+        <a href="{{ url_for('pricing') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Pricing</a>
+        <a href="{{ url_for('about') }}" class="block text-gray-700 hover:text-blue-600 font-medium">About</a>
+        {% if logged_in %}
+          <a href="{{ url_for('dashboard') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+          <a href="{{ url_for('logout') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Logout</a>
+        {% else %}
+          <a href="{{ url_for('login') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Log in</a>
+          <a href="{{ url_for('login') }}" class="block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold text-center">Get Started</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  
+
+  <!-- Hero Section -->
+  <section class="relative h-[80vh] flex items-center justify-center text-center text-white pt-20" 
+           style='background-image: url("https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"); 
+                  background-size: cover; 
+                  background-position: center; 
+                  background-repeat: no-repeat;'>
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="relative container mx-auto px-4 z-10">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4" data-aos="fade-up">AI-Powered Data Extraction</h1>
+      <p class="text-lg sm:text-2xl mb-8" data-aos="fade-up" data-aos-delay="100">Unlock actionable insights from your documents with cutting-edge AI. Streamline processes, reduce manual tasks, and drive efficiency like never before with AI Infinite.</p>
+      <a href="{{ url_for('login') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded text-xl transform hover:scale-105 transition duration-300" data-aos="fade-up" data-aos-delay="200">Get Started</a>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">How It Works</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Step 1 -->
+        <div class="flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="0">
+          <div class="p-6 bg-white rounded-full shadow-lg mb-4">
+            <i class="fas fa-upload text-blue-600 text-4xl animate-bounce"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">1. Upload</h3>
+          <p>Drag & drop your documents or choose files from your device. We support PNG, JPG, PDF, and more.</p>
+        </div>
+        <!-- Step 2 -->
+        <div class="flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="p-6 bg-white rounded-full shadow-lg mb-4">
+            <i class="fas fa-microchip text-blue-600 text-4xl animate-bounce"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">2. Detect</h3>
+          <p>Our AI scans the document to identify key fields like names, dates, totals, IDs, and other important details.</p>
+        </div>
+        <!-- Step 3 -->
+        <div class="flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="400">
+          <div class="p-6 bg-white rounded-full shadow-lg mb-4">
+            <i class="fas fa-file-export text-blue-600 text-4xl animate-bounce"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">3. Extract</h3>
+          <p>Receive clean, structured data in JSON or Excel format—perfect for automation, integration, and analytics.</p>
+        </div>
+      </div>
+      <div class="text-center mt-8 text-sm text-gray-600">
+      </div>
+    </div>
+  </section>
+
+ <!-- Core Features Section -->
+<section id="features" class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Core Features</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="p-8 bg-gray-50 rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition duration-300" data-aos="fade-up" data-aos-delay="100">
+        <div class="text-blue-600 mb-4 text-center">
+          <i class="fas fa-file-alt fa-3x"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-center mb-2">Multi-format Support</h3>
+        <p class="text-center text-gray-600">Extract data from PDFs, scanned images, and camera‑captured documents easily.</p>
+      </div>
+      <!-- Feature 2 -->
+      <div class="p-8 bg-gray-50 rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition duration-300" data-aos="fade-up" data-aos-delay="200">
+        <div class="text-blue-600 mb-4 text-center">
+          <i class="fas fa-table fa-3x"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-center mb-2">Export to Excel/JSON</h3>
+        <p class="text-center text-gray-600">Download your output in Excel or machine‑readable JSON format—ready for integration.</p>
+      </div>
+      <!-- Feature 3 -->
+      <div class="p-8 bg-gray-50 rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition duration-300" data-aos="fade-up" data-aos-delay="300">
+        <div class="text-blue-600 mb-4 text-center">
+          <i class="fas fa-lock fa-3x"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-center mb-2">Enterprise‑grade Security</h3>
+        <p class="text-center text-gray-600">End‑to‑end encryption and secure data handling ensure your privacy and safety.</p>
+      </div>
+      <!-- Feature 4 (Updated) -->
+      <div class="p-8 bg-gray-50 rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition duration-300" data-aos="fade-up" data-aos-delay="400">
+        <div class="text-blue-600 mb-4 text-center">
+          <i class="fas fa-robot fa-3x"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-center mb-2">Trained AI Models</h3>
+        <p class="text-center text-gray-600">Leverages AI models trained on diverse invoice data for superior accuracy.</p>
+      </div>
+      <!-- Feature 5 -->
+      <div class="p-8 bg-gray-50 rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition duration-300" data-aos="fade-up" data-aos-delay="500">
+        <div class="text-blue-600 mb-4 text-center">
+          <i class="fas fa-plug fa-3x"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-center mb-2">API & Dashboard Access</h3>
+        <p class="text-center text-gray-600">Seamlessly integrate with our APIs or manage your documents through a user‑friendly dashboard.</p>
+      </div>
+      <!-- Feature 6 -->
+      <div class="p-8 bg-gray-50 rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition duration-300" data-aos="fade-up" data-aos-delay="600">
+        <div class="text-blue-600 mb-4 text-center">
+          <i class="fas fa-cogs fa-3x"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-center mb-2">Custom Fields</h3>
+        <p class="text-center text-gray-600">Define and extract any fields unique to your workflows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  
+<!-- Who It's For Section -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Who It's For</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="p-6 bg-white rounded-lg shadow" data-aos="fade-up">
+        <h3 class="text-xl font-semibold mb-3">Businesses & Enterprises</h3>
+        <p class="text-gray-600">Automate invoice processing, compliance tracking, or identity validation to save time and reduce errors.</p>
+      </div>
+      <div class="p-6 bg-white rounded-lg shadow" data-aos="fade-up">
+        <h3 class="text-xl font-semibold mb-3">Developers & Startups</h3>
+        <p class="text-gray-600">Integrate our robust APIs into your applications and streamline your workflows with ease.</p>
+      </div>
+      <div class="p-6 bg-white rounded-lg shadow" data-aos="fade-up">
+        <h3 class="text-xl font-semibold mb-3">Government & Institutions</h3>
+        <p class="text-gray-600">Digitize records, IDs, and multi-language documents securely while optimizing workflow efficiency.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form Section  -->
+<div class="container mx-auto max-w-4xl px-4 py-8 bg-white rounded-lg shadow-[0_10px_25px_rgba(0,0,0,0.5)] relative flex flex-col md:flex-row justify-between items-start" data-aos="fade-up" style="margin-bottom: -200px;">
+<div class="w-full md:w-1/2 p-4 z-10 relative">
+  <h2 class="text-2xl font-bold text-blue-900 mb-4">Have more questions?</h2>
+  <p class="text-gray-500 text-sm mb-4">GET IN TOUCH</p>
+  <form id="query-form" action="/submit" method="post" class="space-y-4">
+    <div>
+      <label for="work-email" class="block text-sm font-medium text-gray-700">Your work email*</label>
+      <input type="email" id="work-email" name="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+    </div>
+    <div>
+      <label for="contact-number" class="block text-sm font-medium text-gray-700">Contact number</label>
+      <input type="tel" id="contact-number" name="contact" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label for="help-message" class="block text-sm font-medium text-gray-700">How can we help you?*</label>
+      <textarea id="help-message" name="message" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-24 resize-y" required></textarea>
+    </div>
+    <button type="submit" class="w-full md:w-auto bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+      Submit Query >>
+    </button>
+  </form>
+</div>
+<div class="w-full md:w-1/2 p-4 border-l border-gray-300 md:border-l-2 z-10 relative">
+  <h3 class="text-xl font-semibold text-blue-900 mb-2">Talk to an AI expert</h3>
+  <p class="text-gray-600 mb-4">Get a free 15-minute consultation with our Automation experts. We can discuss Pricing, Integrations or try the app live on your documents.</p>
+  <!-- Button to trigger the popup modal -->
+  <button id="demo-btn" class="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center">
+    Request a Demo
+    <span class="ml-2"><i class="fas fa-user"></i><i class="fas fa-user ml-1"></i></span>
+  </button>
+</div>
+</div>
+
+<!-- Footer  -->
+<footer class="bg-gray-800 text-gray-200 pt-64 pb-8">
+<div class="container mx-auto px-4 text-center">
+  <p class="mb-2">© 2025 AI Infinite. All rights reserved.</p>
+  <p class="mb-2">
+    <a href="#" class="hover:underline mx-2">Features</a>|
+    <a href="#" class="hover:underline mx-2">Integrations</a>|
+    <a href="#" class="hover:underline mx-2">Pricing</a>|
+    <a href="#" class="hover:underline mx-2">Blog</a>|
+    <a href="#" class="hover:underline mx-2">Help Center</a>|
+    <a href="#" class="hover:underline mx-2">API</a>
+  </p>
+  <p class="mb-2">
+    <a href="#" class="hover:underline mx-2">Terms</a>|
+    <a href="#" class="hover:underline mx-2">Privacy Policy</a>|
+    <a href="#" class="hover:underline mx-2">Security</a>|
+    <a href="#" class="hover:underline mx-2">GDPR</a>
+  </p>
+  <p>
+    Follow us:
+    <a href="#" class="mx-2 transform hover:scale-125 transition duration-300"><i class="fab fa-twitter"></i></a>
+    <a href="#" class="mx-2 transform hover:scale-125 transition duration-300"><i class="fab fa-linkedin"></i></a>
+    <a href="#" class="mx-2 transform hover:scale-125 transition duration-300"><i class="fab fa-facebook"></i></a>
+  </p>
+</div>
+</footer>
+
+Popup Modal
+<div id="demo-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+<!-- Increase max-w so we can see two columns side by side -->
+<div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl mx-4 relative">
+  <button
+    id="close-modal"
+    class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+  >
+    <i class="fas fa-times"></i>
+  </button>
+
+  <!-- Two columns inside the modal -->
+  <div class="flex flex-col md:flex-row md:gap-6">
+    <!-- Left column: Demo info and bullet points -->
+    <div class="md:w-1/2 space-y-4 mb-4 md:mb-0">
+      <h2 class="text-2xl font-bold text-blue-900">Demo Call</h2>
+      <p class="text-gray-600">
+        Find out why 10,000+ customers trust Nanonets!
+      </p>
+      <p class="text-gray-600">
+        In this demo we'll show you how we:
+      </p>
+      <ul class="list-disc list-inside text-gray-600 mb-4">
+        <li>Achieve 97% accuracy with our best in class Intelligent Document Processing platform 📄</li>
+        <li>10x your productivity with our seamless workflows and automation engines ⚙️</li>
+        <li>Scale to your needs while achieving a meaningful ROI 💡</li>
+      </ul>
+      <p class="text-gray-600">
+        Interested? Click Schedule Event to find available time slots.
+      </p>
+      <p class="text-gray-600">Looking forward to seeing you!</p>
+    </div>
+
+    <!-- Right column: Form -->
+    <div class="md:w-1/2 space-y-4">
+      <form id="demo-form" action="/schedule" method="post" class="space-y-4">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Name *</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            required
+          >
+        </div>
+        <div>
+          <label for="company-email" class="block text-sm font-medium text-gray-700">Company email *</label>
+          <input
+            type="email"
+            id="company-email"
+            name="company-email"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            required
+          >
+        </div>
+        <div>
+          <label for="timezone" class="block text-sm font-medium text-gray-700">
+            Which time zone works best for the meeting? *
+          </label>
+          <div class="mt-1 space-y-2">
+            <label class="flex items-center">
+              <input type="radio" name="timezone" value="americas" class="form-radio text-blue-500" required>
+              <span class="ml-2 text-gray-700">Americas</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="timezone" value="europe" class="form-radio text-blue-500">
+              <span class="ml-2 text-gray-700">Europe</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="timezone" value="asia-pacific" class="form-radio text-blue-500">
+              <span class="ml-2 text-gray-700">Asia Pacific &amp; Australia</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="timezone" value="middle-east" class="form-radio text-blue-500">
+              <span class="ml-2 text-gray-700">Middle East</span>
+            </label>
+          </div>
+        </div>
+        <!-- "Schedule Event" button is visible here -->
+        <button
+          type="submit"
+          class="w-full bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Schedule Event
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- JavaScript for Popup -->
+<script>
+// Show modal when "Request a Demo" button is clicked
+document.getElementById('demo-btn').addEventListener('click', function() {
+  document.getElementById('demo-modal').classList.remove('hidden');
+});
+
+// Hide modal when the close (X) button is clicked
+document.getElementById('close-modal').addEventListener('click', function() {
+  document.getElementById('demo-modal').classList.add('hidden');
+});
+
+// Hide modal if user clicks outside the modal content
+document.getElementById('demo-modal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.classList.add('hidden');
+  }
+});
+</script>
+
+<!-- Thank You Popup Modal -->
+<div id="thank-you-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+<div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm mx-4 relative text-center">
+  <button id="close-thankyou" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+    <i class="fas fa-times"></i>
+  </button>
+  <h2 class="text-xl font-bold text-blue-900 mb-4">Thank You!</h2>
+  <p class="text-gray-700">Thank you for your interest! We will contact you as soon as possible.</p>
+</div>
+</div>
+
+<script>
+const demoForm = document.getElementById('demo-form');
+const thankYouModal = document.getElementById('thank-you-modal');
+const closeThankYouButton = document.getElementById('close-thankyou');
+
+demoForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const formData = new FormData(demoForm);
+
+  try {
+    const response = await fetch('http://127.0.0.1:8080/schedule', {
+      method: 'POST',
+      body: formData
+    });
+    const result = await response.json();
+
+    if (result.success) {
+      thankYouModal.classList.remove('hidden');
+      demoForm.reset();
+    } else {
+      alert(result.message || 'Failed to schedule demo.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error submitting demo request.');
+  }
+});
+
+// Existing close modal logic (already in your code, included for clarity)
+closeThankYouButton.addEventListener('click', () => {
+  thankYouModal.classList.add('hidden');
+});
+
+thankYouModal.addEventListener('click', (event) => {
+  if (event.target === thankYouModal) {
+    thankYouModal.classList.add('hidden');
+  }
+});
+</script>
+
+<script>
+const modal = document.getElementById('thank-you-modal');
+const closeButton = document.getElementById('close-thankyou');
+
+closeButton.addEventListener('click', () => {
+modal.classList.add('hidden');
+});
+
+modal.addEventListener('click', (event) => {
+if (event.target === modal) {
+  modal.classList.add('hidden');
+}
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const queryForm = document.getElementById('query-form');
+  if (!queryForm) {
+    console.error('Query form with id="query-form" not found!');
+    return;
+  }
+
+  queryForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+    console.log('Form Data Object:', data);
+
+    // Validate required fields
+    if (!data.email || !data.message) {
+      console.error('Validation failed: Email or message is missing');
+      alert('Please fill in both email and message fields.');
+      return;
+    }
+
+    fetch('/submit', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Server response:', data);
+      if (data.success) {
+        document.getElementById('thank-you-modal').classList.remove('hidden');
+        queryForm.reset();
+      } else {
+        alert(data.message || 'Error submitting query');
+      }
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+      alert('Error submitting query. Check console for details.');
+    });
+  });
+});
+</script>
+
+
+<!-- Schema Markup for SEO -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AI Infinite",
+    "description": "AI-powered document parser for automating data extraction from PDFs, invoices, passports, and more.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": {
+        "@type": "Offer",
+        "price": "Starting at $29/month"
+    }
+  }
+</script>
+
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800, // Animation duration in milliseconds
+    once: true // Animations happen only once on scroll
+  });
+</script>
+
+</body>
+</html>

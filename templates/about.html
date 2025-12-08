@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Learn about AI Infinite - Empowering businesses with AI-driven document processing and data extraction." />
+  <meta name="keywords" content="AI Infinite, about us, document processing, data extraction, AI automation" />
+  <title>About Us - AI Infinite</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="icon" href="{{ url_for('static', filename='logos/ai infinite.jpg') }}" type="image/x-icon">
+</head>
+<body class="antialiased text-gray-800 font-sans">
+  <!-- Navigation (matched to Invoice page) -->
+  <!-- Updated Navbar -->
+  <nav id="navbar" class="fixed top-0 left-0 w-full bg-[#f7f7f7] backdrop-blur shadow-md z-50">
+    <div class="container mx-auto px-6 py-4 flex items-center">
+      <!-- Logo / Brand -->
+      <a href="{{ url_for('home_logged_in') if logged_in else url_for('index') }}" class="flex items-center space-x-2 hover:opacity-90">
+        <img src="{{ url_for('static', filename='logos/aiinfinite.png') }}" alt="AI Infinite Logo" class="h-12 md:h-16 w-auto" />
+        <span class="text-xl font-bold text-gray-800"></span>
+      </a>
+
+      <!-- Combined Right-side Links -->
+      <div class="hidden md:flex items-center ml-auto space-x-12">
+        <a href="{{ url_for('invoice', doc_type='invoice') }}" class="text-gray-700 hover:text-blue-600 font-medium">Invoice</a>
+        <a href="{{ url_for('passport', doc_type='passport') }}" class="text-gray-700 hover:text-blue-600 font-medium">Passport</a>
+        <a href="{{ url_for('pricing') }}" class="text-gray-700 hover:text-blue-600 font-medium">Pricing</a>
+        <a href="{{ url_for('about') }}" class="text-gray-700 hover:text-blue-600 font-medium">About</a>
+        {% if logged_in %}
+          <a href="{{ url_for('dashboard') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+          <a href="{{ url_for('logout') }}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold">Logout</a>
+        {% else %}
+          <a href="{{ url_for('login') }}" class="text-gray-700 hover:text-blue-600 font-medium">Log in</a>
+          <a href="{{ url_for('login') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold">Get Started</a>
+        {% endif %}
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
+        <i class="fas fa-bars fa-2x"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu Content -->
+    <div id="menu" class="hidden md:hidden bg-[#f7f7f7] backdrop-blur shadow-inner">
+      <div class="flex flex-col space-y-2 px-6 py-4">
+        <a href="{{ url_for('invoice', doc_type='invoice') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Invoice</a>
+        <a href="{{ url_for('passport', doc_type='passport') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Passport</a>
+        <a href="{{ url_for('pricing') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Pricing</a>
+        <a href="{{ url_for('about') }}" class="block text-gray-700 hover:text-blue-600 font-medium">About</a>
+        {% if logged_in %}
+          <a href="{{ url_for('dashboard') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+          <a href="{{ url_for('logout') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Logout</a>
+        {% else %}
+          <a href="{{ url_for('login') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Log in</a>
+          <a href="{{ url_for('login') }}" class="block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold text-center">Get Started</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <section class="py-24 bg-gray-50 mt-16">
+    <div class="container mx-auto px-6 space-y-20">
+
+      <!-- What We Do -->
+      <div data-aos="fade-up">
+        <h2 class="text-4xl font-bold text-center mb-6">What We Do</h2>
+        <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto">AI Infinite empowers businesses to streamline document processing using advanced OCR and machine learning. Our tools automate data extraction from invoices, passports, and more—reducing manual work by up to 90%.</p>
+      </div>
+
+      <!-- Our Vision -->
+      <div data-aos="fade-up" data-aos-delay="100">
+        <h2 class="text-4xl font-bold text-center mb-6">Our Vision</h2>
+        <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto">We envision a world where AI is as intuitive and accessible as the internet. Our mission is to embed AI seamlessly into workflows, making automation a natural extension of every business process.</p>
+      </div>
+
+      <!-- Get in Touch Form -->
+      <div data-aos="fade-up" data-aos-delay="200">
+        <h2 class="text-4xl font-bold text-center mb-6">Get in Touch</h2>
+        <p class="text-lg text-gray-600 text-center mb-6">Have questions? Reach out to our team today.</p>
+        <form action="#submit" method="POST" class="max-w-2xl mx-auto space-y-4">
+          <input type="email" name="email" placeholder="Your Work Email*" required class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
+          <input type="tel" name="phone" placeholder="Contact Number" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
+          <textarea name="message" rows="4" placeholder="How Can We Help You?*" required class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"></textarea>
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition">Send Message</button>
+        </form>
+      </div>
+
+      <!-- Request a Demo -->
+      <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+        <h3 class="text-2xl font-bold mb-4">Talk to an AI Expert</h3>
+        <p class="text-gray-600 mb-6 max-w-xl mx-auto">Book a free 15-minute call with our automation specialists to explore integrations, pricing, or see a live demo.</p>
+        <a href="#demo" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition transform hover:scale-105">Request a Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-200 py-10">
+    <div class="container mx-auto px-6 text-center space-y-4">
+      <img src="{{ url_for('static', filename='logos/aiinfinite.png') }}" class="h-10 mx-auto" alt="AI Infinite">
+      <p>
+        <a href="#api-docs" class="hover:underline mx-2">API</a> |
+        <a href="#help" class="hover:underline mx-2">Help Center</a> |
+        <a href="#blog" class="hover:underline mx-2">Blog</a> |
+        <a href="#careers" class="hover:underline mx-2">Careers</a>
+      </p>
+      <p class="text-sm">+91 82753 67267 | connect@aiindia.ai | Pune, Maharashtra 411009</p>
+      <div class="text-lg">
+        <a href="https://twitter.com/AiIndia2?s=09" class="mx-2 hover:text-white"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.linkedin.com/company/ai-india/" class="mx-2 hover:text-white"><i class="fab fa-linkedin"></i></a>
+        <a href="#" class="mx-2 hover:text-white"><i class="fab fa-medium"></i></a>
+      </div>
+      <p class="text-sm">© 2025 AI Infinite Technologies Inc.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      document.getElementById('menu').classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

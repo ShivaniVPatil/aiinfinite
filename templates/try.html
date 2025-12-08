@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+       
+    body {
+        font-family: 'Arial', sans-serif;
+        /* background-image: linear-gradient(to top, #ebbba7 0%, #cfc7f8 100%); */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+
+    h2 {
+        color: #4a4a4a;
+        margin-bottom: 20px;
+        font-size: 2rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    input[type="text"], input[type="password"] {
+        padding: 12px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+        border-color: #5f9ea0;
+    }
+
+    button {
+        background-color: #5f9ea0;
+        color: #fff;
+        font-size: 1rem;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #3a7d7d;
+    }
+
+    a {
+        color: #5f9ea0;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .links {
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .links p {
+        margin: 10px 0;
+    }
+
+    /* Flash message container */
+    .message-container {
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    .message {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .message.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .message.info {
+        background-color: #d1e
+    }
+
+
+    login-form {
+        position: relative;
+        animation: slideIn 0.5s ease-in-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    /* Styling the form */
+    form {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    /* Flash message styles */
+.flash-messages {
+    list-style-type: none;
+    padding: 0;
+}
+
+.flash-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.flash-message.warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.flash-message.info {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form action="{{ url_for('login') }}" method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required><br>
+    
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required><br>
+    
+            <button type="submit">Login</button>
+        </form>
+        
+        <div class="links">
+            <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+            <p>Forgot your password? <a href="{{ url_for('forgot_password') }}">Reset Password</a></p>
+        </div>
+    
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="message-container">
+                    {% for message in messages %}
+                        <div class="message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+    
+</body>
+</html>

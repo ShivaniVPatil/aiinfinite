@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="AI Infinite Pricing — Choose the plan that fits your needs. Plus, Pro, or Enterprise." />
+  <meta name="keywords" content="AI Infinite, pricing, plans, AI OCR, invoice extraction" />
+  <title>Pricing — AI Infinite</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- AOS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="icon" href="{{ url_for('static', filename='logos/ai infinite.jpg') }}" type="image/x-icon">
+</head>
+<body class="antialiased text-gray-800 font-sans">
+
+<!-- Updated Navbar -->
+<nav id="navbar" class="fixed top-0 left-0 w-full bg-[#f7f7f7] backdrop-blur shadow-md z-50">
+  <div class="container mx-auto px-6 py-4 flex items-center">
+    <!-- Logo / Brand -->
+    <a href="{{ url_for('home_logged_in') if logged_in else url_for('index') }}" class="flex items-center space-x-2 hover:opacity-90">
+      <img src="{{ url_for('static', filename='logos/aiinfinite.png') }}" alt="AI Infinite Logo" class="h-12 md:h-16 w-auto" />
+      <span class="text-xl font-bold text-gray-800"></span>
+    </a>
+
+    <!-- Combined Right-side Links -->
+    <div class="hidden md:flex items-center ml-auto space-x-12">
+      <a href="{{ url_for('invoice', doc_type='invoice') }}" class="text-gray-700 hover:text-blue-600 font-medium">Invoice</a>
+      <a href="{{ url_for('passport', doc_type='passport') }}" class="text-gray-700 hover:text-blue-600 font-medium">Passport</a>
+      <a href="{{ url_for('pricing') }}" class="text-gray-700 hover:text-blue-600 font-medium">Pricing</a>
+      <a href="{{ url_for('about') }}" class="text-gray-700 hover:text-blue-600 font-medium">About</a>
+      {% if logged_in %}
+        <a href="{{ url_for('dashboard') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+        <a href="{{ url_for('logout') }}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="text-gray-700 hover:text-blue-600 font-medium">Log in</a>
+        <a href="{{ url_for('login') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold">Get Started</a>
+      {% endif %}
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
+      <i class="fas fa-bars fa-2x"></i>
+    </button>
+  </div>
+  <!-- Mobile Menu Content -->
+  <div id="menu" class="hidden md:hidden bg-[#f7f7f7] backdrop-blur shadow-inner">
+    <div class="flex flex-col space-y-2 px-6 py-4">
+      <a href="{{ url_for('invoice', doc_type='invoice') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Invoice</a>
+      <a href="{{ url_for('passport', doc_type='passport') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Passport</a>
+      <a href="{{ url_for('pricing') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Pricing</a>
+      <a href="{{ url_for('about') }}" class="block text-gray-700 hover:text-blue-600 font-medium">About</a>
+      {% if logged_in %}
+        <a href="{{ url_for('dashboard') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+        <a href="{{ url_for('logout') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="block text-gray-700 hover:text-blue-600 font-medium">Log in</a>
+        <a href="{{ url_for('login') }}" class="block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold text-center">Get Started</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+  <!-- Hero / Page Title -->
+  <section class="pt-32 pb-12 bg-white text-center">
+    <div class="container mx-auto px-6">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Pricing Plans</h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">Choose the plan that fits your needs. Upgrade or downgrade at any time.</p>
+    </div>
+  </section>
+
+  <!-- Pricing Cards -->
+  <section id="pricing" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="grid gap-8 md:grid-cols-3">
+
+        <!-- Plus Plan -->
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col" data-aos="fade-up">
+          <h2 class="text-2xl font-semibold mb-4 text-center">Plus</h2>
+          <p class="text-center text-gray-600 mb-6">Ideal for small teams</p>
+          <div class="text-center mb-6">
+            <span class="text-4xl font-bold">$10</span>
+            <span class="text-gray-600">/mo</span>
+          </div>
+          <ul class="space-y-3 mb-6 flex-1">
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> 300 API calls/mo</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> Data Extraction AI</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> API Access</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> Excel & JSON output</li>
+          </ul>
+          <a href="{{ url_for('login') }}" class="mt-auto block bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-lg font-semibold transition">Start Plus</a>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col border-2 border-blue-600" data-aos="fade-up" data-aos-delay="100">
+          <h2 class="text-2xl font-semibold mb-4 text-center">Pro</h2>
+          <p class="text-center text-gray-600 mb-6">For growing businesses</p>
+          <div class="text-center mb-6">
+            <span class="text-4xl font-bold">$25</span>
+            <span class="text-gray-600">/mo</span>
+          </div>
+          <ul class="space-y-3 mb-6 flex-1">
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> 750 API calls/mo</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> Data Extraction AI</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> API Access</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> Excel & JSON output</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> ERP Integration</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> Custom Integration</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> 1:1 Support</li>
+          </ul>
+          <a href="{{ url_for('login') }}" class="mt-auto block bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-lg font-semibold transition">Start Pro</a>
+        </div>
+
+        <!-- Enterprise Plan -->
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col" data-aos="fade-up" data-aos-delay="200">
+          <h2 class="text-2xl font-semibold mb-4 text-center">Enterprise</h2>
+          <p class="text-center text-gray-600 mb-6">Custom solutions at scale</p>
+          <div class="text-center mb-6">
+            <span class="text-4xl font-bold">Custom</span>
+          </div>
+          <ul class="space-y-3 mb-6 flex-1">
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> Unlimited API calls</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> Data Extraction AI</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> API Access</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> Excel & JSON output</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> ERP Integration</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> Custom Integration</li>
+            <li class="flex items-center"><i class="fas fa-check text-blue-600 mr-2"></i> 1:1 Support</li>
+          </ul>
+          <a href="{{ url_for('about') }}" class="mt-auto block bg-gray-800 hover:bg-gray-900 text-white text-center py-3 rounded-lg font-semibold transition">Contact Sales</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="container mx-auto px-6 max-w-2xl">
+      <h2 class="text-3xl font-bold text-center mb-8" data-aos="fade-up">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        <details class="bg-gray-50 p-4 rounded-lg shadow" data-aos="fade-up">
+          <summary class="font-semibold cursor-pointer">Can I switch plans anytime?</summary>
+          <p class="mt-2 text-gray-600">Yes—upgrade or downgrade your plan at any time directly from your dashboard.</p>
+        </details>
+        <details class="bg-gray-50 p-4 rounded-lg shadow" data-aos="fade-up" data-aos-delay="100">
+          <summary class="font-semibold cursor-pointer">Do you offer annual billing?</summary>
+          <p class="mt-2 text-gray-600">Yes—save 20% when you choose annual billing for Plus or Pro plans.</p>
+        </details>
+        <details class="bg-gray-50 p-4 rounded-lg shadow" data-aos="fade-up" data-aos-delay="200">
+          <summary class="font-semibold cursor-pointer">What payment methods are accepted?</summary>
+          <p class="mt-2 text-gray-600">We accept all major credit cards and invoicing for Enterprise customers.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-200 py-8">
+    <div class="container mx-auto px-6 text-center space-y-4">
+      <img src="{{ url_for('static', filename='logos/aiinfinite.png') }}" class="h-10 mx-auto" alt="AI Infinite">
+      <p>
+        <a href="#" class="hover:underline mx-2">API Docs</a> |
+        <a href="#" class="hover:underline mx-2">Help Center</a> |
+        <a href="#" class="hover:underline mx-2">Blog</a> |
+        <a href="#" class="hover:underline mx-2">Careers</a>
+      </p>
+      <p class="text-sm">+91 82753 67267 | connect@aiindia.ai | Pune, Maharashtra 411009</p>
+      <div class="text-lg">
+        <a href="https://twitter.com/AiIndia2?s=09" class="mx-2 hover:text-white"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.linkedin.com/company/ai-india/" class="mx-2 hover:text-white"><i class="fab fa-linkedin"></i></a>
+        <a href="#" class="mx-2 hover:text-white"><i class="fab fa-medium"></i></a>
+      </div>
+      <p class="text-sm">© 2025 AI Infinite Technologies Inc.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      document.getElementById('menu').classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>
